@@ -1,7 +1,17 @@
 version: '2.3'
 
 services:
-  nft-marketplace:
-    build: .
+
+  frontend:
+    build: 
+      context: .
+      dockerfile: app/Dockerfile
     ports:
       - 3000:3000
+  
+  backend:
+    build: 
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - 8080:8080
