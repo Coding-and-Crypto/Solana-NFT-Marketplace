@@ -1,0 +1,7 @@
+version: '2.3'
+
+services:
+  nft-marketplace:
+    build: .
+    ports:
+      - 3000:3000
