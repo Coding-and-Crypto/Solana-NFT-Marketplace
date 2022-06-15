@@ -44,13 +44,23 @@ Verify it was installed correctly:
 ts-node ~/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts --version
 ```
 
-## Run
+## Using this Repository
+### Run client
 ```shell
 anchor run test
 ```
 OR
 ```shell
 docker-compose up
+```
+### Deploy Program
+```shell
+anchor build
+anchor deploy
+```
+OR
+```shell
+docker-compose run program "anchor build && anchor deploy"
 ```
 
 ## Working with an Imported IDL

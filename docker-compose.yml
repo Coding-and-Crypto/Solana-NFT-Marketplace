@@ -2,6 +2,8 @@ version: '2.3'
 
 services:
 
+  # docker-compose up
+
   frontend:
     build: ./app
     ports:
@@ -13,25 +15,14 @@ services:
     build: ./api
     ports:
       - 8080:8080
+  
+  # docker-compose run program "anchor build"
 
   program:
-    build: .
-    command: anchor build
+    build: 
+      context: .
+      dockerfile: ./programs/Dockerfile
     volumes:
       - .:.
     profiles:
-      - program-build
-  program:
-    build: .
-    command: anchor deploy
-    volumes:
-      - .:.
-    profiles:
-      - program-deploy
-  program:
-    build: .
-    command: anchor build && anchor deploy
-    volumes:
-      - .:.
-    profiles:
-      - program-full
+      - program

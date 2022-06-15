@@ -1,0 +1,17 @@
+.git
+api/
+app/
+assets/
+migrations/
+node_modules/
+solpg/
+target/
+tests/
+.gitignore
+.prettierignore
+docker-compose.yml
+how_it_works.jpg
+package-lock.json
+README.md
+tsconfig.json
+yarn.lock
