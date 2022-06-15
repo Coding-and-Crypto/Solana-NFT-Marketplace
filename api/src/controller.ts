@@ -48,7 +48,7 @@ router.post('/sell-nft', async (req: Request, res: Response) => {
     return res.status(200).json(
         await service.sellNft(
             req.body.mintAddress,
-            
+            req.body.ownerPublicKey,
         )
     );
 });
