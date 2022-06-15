@@ -1,0 +1,2 @@
+## Copy your local Solana keypair into the "wallet" folder
+## Name it keypair.json : wallet/keypair.json 
