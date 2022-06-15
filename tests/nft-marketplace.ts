@@ -21,28 +21,28 @@ describe("nft-marketplace", async () => {
   );
 
   const mintKeypair: anchor.web3.Keypair = anchor.web3.Keypair.generate();
-  const tokenAddress = await anchor.utils.token.associatedAddress({
-    mint: mintKeypair.publicKey,
-    owner: wallet.publicKey
-  });
+  // const tokenAddress = await anchor.utils.token.associatedAddress({
+  //   mint: mintKeypair.publicKey,
+  //   owner: wallet.publicKey
+  // });
 
-  const metadataAddress = (await anchor.web3.PublicKey.findProgramAddress(
-    [
-      Buffer.from("metadata"),
-      TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-      mintKeypair.publicKey.toBuffer(),
-    ],
-    TOKEN_METADATA_PROGRAM_ID
-  ))[0];
-  const masterEditionAddress = (await anchor.web3.PublicKey.findProgramAddress(
-    [
-      Buffer.from("metadata"),
-      TOKEN_METADATA_PROGRAM_ID.toBuffer(),
-      mintKeypair.publicKey.toBuffer(),
-      Buffer.from("edition"),
-    ],
-    TOKEN_METADATA_PROGRAM_ID
-  ))[0];
+  // const metadataAddress = (await anchor.web3.PublicKey.findProgramAddress(
+  //   [
+  //     Buffer.from("metadata"),
+  //     TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+  //     mintKeypair.publicKey.toBuffer(),
+  //   ],
+  //   TOKEN_METADATA_PROGRAM_ID
+  // ))[0];
+  // const masterEditionAddress = (await anchor.web3.PublicKey.findProgramAddress(
+  //   [
+  //     Buffer.from("metadata"),
+  //     TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+  //     mintKeypair.publicKey.toBuffer(),
+  //     Buffer.from("edition"),
+  //   ],
+  //   TOKEN_METADATA_PROGRAM_ID
+  // ))[0];
 
   it("Mint!", async () => {
     
@@ -50,15 +50,16 @@ describe("nft-marketplace", async () => {
       "Test NFT", "TEST", "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json"
     )
     .accounts({
-      masterEdition: masterEditionAddress,
-      metadata: metadataAddress,
+      // masterEdition: masterEditionAddress,
+      // metadata: metadataAddress,
       mint: mintKeypair.publicKey,
-      mintAuthority: mintKeypair.publicKey,
-      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      systemProgram: anchor.web3.SystemProgram.programId,
-      tokenAccount: tokenAddress,
-      tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
-      tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
+      // mintAuthority: wallet.publicKey,
+      // rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      authority: wallet.publicKey,
+      // systemProgram: anchor.web3.SystemProgram.programId,
+      // tokenAccount: tokenAddress,
+      // tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+      // tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
     })
     .signers([mintKeypair])
     .rpc();
