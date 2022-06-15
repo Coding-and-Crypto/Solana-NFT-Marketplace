@@ -1,0 +1,26 @@
+{
+    "name": "rsn-backend",
+    "version": "1.0.0",
+    "description": "Backend for Reputation Social Network",
+    "author": "Blu3 Hack Team",
+    "main": "src/server.ts",
+    "scripts": {
+      "dev": "nodemon src/server.ts",
+      "build": "rm -rf build/ && prettier --write src/ && tsc"
+    },
+    "dependencies": {
+      "@redis/client": "^1.1.0",
+      "@types/axios": "^0.14.0",
+      "@types/express": "^4.17.13",
+      "@types/morgan": "^1.9.3",
+      "axios": "^0.27.2",
+      "cors": "^2.8.5",
+      "express": "^4.18.1",
+      "morgan": "^1.10.0",
+      "nodemon": "^2.0.16",
+      "ts-node": "^10.7.0",
+      "typeorm": "^0.3.6",
+      "typescript": "^4.6.4"
+    }
+  }
+  
