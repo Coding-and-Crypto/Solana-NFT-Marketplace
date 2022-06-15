@@ -52,3 +52,8 @@ OR
 ```shell
 docker-compose up
 ```
+
+## Working with an Imported IDL
+If you're using the [Solana Playground IDE](https://beta.solpg.io), you can import your Solana program's IDL by building it, selecting `Extra -> IDL` from the drop-down, clicking `Export`, then dropping your json file in the `solpg` folder.   
+   
+Then just un-comment the necessary code in either `api/src/service.ts` or `tests/nft-marketplace.ts`.

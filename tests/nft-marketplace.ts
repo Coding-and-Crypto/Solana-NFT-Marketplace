@@ -1,5 +1,6 @@
 import * as anchor from "@project-serum/anchor";
-// import { NftMarketplace } from "../target/types/nft_marketplace";
+// ** Comment this to use solpg imported IDL **
+import { NftMarketplace } from "../target/types/nft_marketplace";
 
 describe("nft-marketplace", async () => {
   
@@ -7,11 +8,14 @@ describe("nft-marketplace", async () => {
   const wallet = provider.wallet as anchor.Wallet;
   anchor.setProvider(provider);
 
-  const program = new anchor.Program(
-    require("../solpg/idl.json"), 
-    new anchor.web3.PublicKey("H2UJjAQTuVJYhaBhh6GD2KaprLBTp1vhP2aaHioya5NM"),
-  );
-  // const program = anchor.workspace.NftMarketplace as anchor.Program<NftMarketplace>;
+  // ** Un-comment this to use solpg imported IDL **
+  // const program = new anchor.Program(
+  //   require("../solpg/idl.json"), 
+  //   new anchor.web3.PublicKey("H2UJjAQTuVJYhaBhh6GD2KaprLBTp1vhP2aaHioya5NM"),
+  // );
+  // ** Comment this to use solpg imported IDL **
+  const program = anchor.workspace.NftMarketplace as anchor.Program<NftMarketplace>;
+  
   const TOKEN_METADATA_PROGRAM_ID = new anchor.web3.PublicKey(
     "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
   );
