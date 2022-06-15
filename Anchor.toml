@@ -1,7 +1,7 @@
 [features]
 seeds = false
 [programs.devnet]
-nft_marketplace = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+nft_marketplace = "H2UJjAQTuVJYhaBhh6GD2KaprLBTp1vhP2aaHioya5NM"
 
 [registry]
 url = "https://anchor.projectserum.com"
