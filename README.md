@@ -1,15 +1,7 @@
 # NFT Marketplace
 
-## Run
-```shell
-anchor run test
-```
-```shell
-yarn start
-```
-```shell
-docker-compose up
-```
+## How it Works
+![](how_it_works.jpg)
 
 ## Development Setup
 
@@ -50,4 +42,13 @@ yarn install --cwd ~/metaplex/js/
 Verify it was installed correctly:
 ```shell
 ts-node ~/metaplex/js/packages/cli/src/candy-machine-v2-cli.ts --version
+```
+
+## Run
+```shell
+anchor run test
+```
+OR
+```shell
+docker-compose up
 ```
