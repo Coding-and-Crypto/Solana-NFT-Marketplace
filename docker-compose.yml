@@ -13,3 +13,25 @@ services:
     build: ./api
     ports:
       - 8080:8080
+
+  program:
+    build: .
+    command: anchor build
+    volumes:
+      - .:.
+    profiles:
+      - program-build
+  program:
+    build: .
+    command: anchor deploy
+    volumes:
+      - .:.
+    profiles:
+      - program-deploy
+  program:
+    build: .
+    command: anchor build && anchor deploy
+    volumes:
+      - .:.
+    profiles:
+      - program-full
