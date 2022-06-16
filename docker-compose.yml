@@ -16,6 +16,7 @@ services:
     ports:
       - 8080:8080
   
+  # TODO:
   # docker-compose run program "anchor build"
 
   program:
@@ -23,6 +24,6 @@ services:
       context: .
       dockerfile: ./programs/Dockerfile
     volumes:
-      - .:.
+      - ./:./
     profiles:
       - program
