@@ -1,22 +1,15 @@
 use {
     anchor_lang::{
         prelude::*,
-        solana_program::{
-            native_token::LAMPORTS_PER_SOL,
-            program::invoke,
-        },
-        system_program,
+        solana_program::program::invoke,
     },
-    anchor_spl::{
-        associated_token,
-        token,
-    },
+    anchor_spl::token,
     mpl_token_metadata::{
         ID as TOKEN_METADATA_ID,
         instruction,
-        state,
     },
 };
+
 
 pub fn mint(
     ctx: Context<MintNft>, 

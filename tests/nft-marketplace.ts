@@ -90,7 +90,7 @@ describe("nft-marketplace", async () => {
     console.log("Master edition metadata initialized");
     
     await program.methods.mint(
-      "Test NFT", "TEST", "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json"
+      "Test NFT 2", "TEST", "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json"
     )
     .accounts({
       masterEdition: masterEditionAddress,
