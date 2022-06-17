@@ -23,7 +23,7 @@ pub fn mint(
     token::mint_to(
         CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
-            token::MintTo{
+            token::MintTo {
                 mint: ctx.accounts.mint.to_account_info(),
                 to: ctx.accounts.token_account.to_account_info(),
                 authority: ctx.accounts.mint_authority.to_account_info(),
