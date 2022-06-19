@@ -11,4 +11,6 @@ cluster = "devnet"
 wallet = "/mnt/c/users/joeca/onedrive/desktop/me/coding-and-crypto/nft-marketplace/wallet/keypair.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+test-mint = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/test-mint.ts"
+test-bid = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/test-bid.ts"
+test-sell = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/test-sell.ts"

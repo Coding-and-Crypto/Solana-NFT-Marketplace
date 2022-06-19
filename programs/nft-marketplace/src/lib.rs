@@ -31,20 +31,22 @@ pub mod nft_marketplace {
     }
 
     pub fn bid(
-        ctx: Context<Bid>,
-        lamports: u64,
+        ctx: Context<BidNft>,
+        bid_lamports: u64,
     ) -> Result<()> {
         bid::bid(
             ctx,
-            lamports,
+            bid_lamports,
         )
     }
 
     pub fn sell(
-        ctx: Context<Sell>,
+        ctx: Context<SellNft>,
+        sale_lamports: u64
     ) -> Result<()> {
         sell::sell(
             ctx,
+            sale_lamports,
         )
     }
 }

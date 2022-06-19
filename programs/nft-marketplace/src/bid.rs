@@ -2,8 +2,8 @@ use anchor_lang::prelude::*;
 
 
 pub fn bid(
-    ctx: Context<Bid>,
-    lamports: u64,
+    ctx: Context<BidNft>,
+    bid_lamports: u64,
 ) -> Result<()> {
     
     msg!("Bid submitted!");
@@ -13,4 +13,4 @@ pub fn bid(
 
 
 #[derive(Accounts)]
-pub struct Bid {}
+pub struct BidNft {}

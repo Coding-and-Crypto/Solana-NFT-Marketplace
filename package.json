@@ -6,6 +6,7 @@
     "dependencies": {
         "@project-serum/anchor": "^0.24.2",
         "@solana/spl-token": "^0.2.0",
+        "mz": "^2.7.0",
         "ts-node": "^10.8.1"
     },
     "devDependencies": {

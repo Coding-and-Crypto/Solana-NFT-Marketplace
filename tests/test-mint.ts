@@ -12,10 +12,15 @@ import { NftMarketplace } from "../target/types/nft_marketplace";
 
 describe("nft-marketplace", async () => {
   
+  const testNftTitle = "On-Chain Test";
+  const testNftSymbol = "TEST";
+  const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json";
 
   const provider = anchor.AnchorProvider.env()
   const wallet = provider.wallet as anchor.Wallet;
   anchor.setProvider(provider);
+
+  console.log(`MINT_SIZE: ${MINT_SIZE}`);
 
   // ** Un-comment this to use solpg imported IDL **
   // const program = new anchor.Program(
@@ -32,41 +37,16 @@ describe("nft-marketplace", async () => {
 
   it("Mint!", async () => {
 
+    // Derive the mint address and the associated token account address
+
     const mintKeypair: anchor.web3.Keypair = anchor.web3.Keypair.generate();
     const tokenAddress = await anchor.utils.token.associatedAddress({
       mint: mintKeypair.publicKey,
       owner: wallet.publicKey
     });
-    const requiredLamports: number = await program.provider.connection.getMinimumBalanceForRentExemption(
-      MINT_SIZE
-    );
     console.log(`New token: ${mintKeypair.publicKey}`);
 
-    await program.provider.sendAndConfirm(
-      new anchor.web3.Transaction().add(
-        anchor.web3.SystemProgram.createAccount({
-          fromPubkey: wallet.publicKey,
-          newAccountPubkey: mintKeypair.publicKey,
-          space: MINT_SIZE,
-          programId: TOKEN_PROGRAM_ID,
-          lamports: requiredLamports,
-        }),
-        createInitializeMintInstruction(
-          mintKeypair.publicKey,
-          0,
-          wallet.publicKey,
-          wallet.publicKey
-        ),
-        createAssociatedTokenAccountInstruction(
-          wallet.publicKey,
-          tokenAddress,
-          wallet.publicKey,
-          mintKeypair.publicKey
-        )
-      ), 
-      [mintKeypair]
-    );
-    console.log("Mint initialized");
+    // Derive the metadata and master edition addresses
 
     const metadataAddress = (await anchor.web3.PublicKey.findProgramAddress(
       [
@@ -77,7 +57,6 @@ describe("nft-marketplace", async () => {
       TOKEN_METADATA_PROGRAM_ID
     ))[0];
     console.log("Metadata initialized");
-
     const masterEditionAddress = (await anchor.web3.PublicKey.findProgramAddress(
       [
         Buffer.from("metadata"),
@@ -88,9 +67,11 @@ describe("nft-marketplace", async () => {
       TOKEN_METADATA_PROGRAM_ID
     ))[0];
     console.log("Master edition metadata initialized");
+
+    // Transact with the "mint" function in our on-chain program
     
     await program.methods.mint(
-      "Test NFT 2", "TEST", "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json"
+      testNftTitle, testNftSymbol, testNftUri
     )
     .accounts({
       masterEdition: masterEditionAddress,
@@ -100,6 +81,7 @@ describe("nft-marketplace", async () => {
       mintAuthority: wallet.publicKey,
       tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
     })
+    .signers([mintKeypair])
     .rpc();
   });
 });
