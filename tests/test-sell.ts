@@ -28,7 +28,7 @@ describe("nft-marketplace", async () => {
 
     const saleAmount = 1 * anchor.web3.LAMPORTS_PER_SOL;
     const mint: anchor.web3.PublicKey = new anchor.web3.PublicKey(
-      "ETJFCAfJdowSMavu3fAQMGwtrNbExwi5rEDXbdXxfdUY"
+      "HQjS4Yp1Ku7P1fy4YwwPACeaDLY9AC62b3omfBSQ5jyT"
     );
     // const buyerPubkey: anchor.web3.PublicKey = new anchor.web3.PublicKey(
     //   "3ec3aeqsDN6yyNqgvi2HxJ8AhY3nwhQBB6L6LPsHAeqX"
