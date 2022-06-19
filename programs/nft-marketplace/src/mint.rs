@@ -10,7 +10,7 @@ use {
     },
     mpl_token_metadata::{
         ID as TOKEN_METADATA_ID,
-        instruction,
+        instruction as token_instruction,
     },
 };
 
@@ -87,7 +87,7 @@ pub fn mint(
     msg!("Creating metadata account...");
     msg!("Metadata account address: {}", &ctx.accounts.metadata.to_account_info().key());
     invoke(
-        &instruction::create_metadata_accounts_v2(
+        &token_instruction::create_metadata_accounts_v2(
             TOKEN_METADATA_ID, 
             ctx.accounts.metadata.key(), 
             ctx.accounts.mint.key(), 
@@ -116,7 +116,7 @@ pub fn mint(
     msg!("Creating master edition metadata account...");
     msg!("Master edition metadata account address: {}", &ctx.accounts.master_edition.to_account_info().key());
     invoke(
-        &instruction::create_master_edition_v3(
+        &token_instruction::create_master_edition_v3(
             TOKEN_METADATA_ID, 
             ctx.accounts.master_edition.key(), 
             ctx.accounts.mint.key(), 
