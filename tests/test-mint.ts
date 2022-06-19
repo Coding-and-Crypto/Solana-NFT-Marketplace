@@ -1,26 +1,17 @@
 import * as anchor from "@project-serum/anchor";
 // ** Comment this to use solpg imported IDL **
-import { 
-  TOKEN_PROGRAM_ID, 
-  createAssociatedTokenAccountInstruction, 
-  getAssociatedTokenAddress, 
-  createInitializeMintInstruction, 
-  MINT_SIZE 
-} from '@solana/spl-token';
 import { NftMarketplace } from "../target/types/nft_marketplace";
 
 
 describe("nft-marketplace", async () => {
   
-  const testNftTitle = "On-Chain Test";
-  const testNftSymbol = "TEST";
-  const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nft-marketplace/nft-example.json";
+  const testNftTitle = "Beta";
+  const testNftSymbol = "BETA";
+  const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Solana-NFT-Marketplace/master/assets/nft-example.json";
 
   const provider = anchor.AnchorProvider.env()
   const wallet = provider.wallet as anchor.Wallet;
   anchor.setProvider(provider);
-
-  console.log(`MINT_SIZE: ${MINT_SIZE}`);
 
   // ** Un-comment this to use solpg imported IDL **
   // const program = new anchor.Program(

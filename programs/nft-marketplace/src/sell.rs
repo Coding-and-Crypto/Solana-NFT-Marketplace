@@ -3,7 +3,10 @@ use {
         prelude::*,
         system_program,
     },
-    anchor_spl::token,
+    anchor_spl::{
+        associated_token,
+        token,
+    },
 };
 
 
@@ -12,15 +15,9 @@ pub fn sell(
     sale_lamports: u64
 ) -> Result<()> {
 
-    msg!(
-        "Received request to sell NFT {} for {} lamports.", 
-        &ctx.accounts.mint.key(),
-        sale_lamports,
-    );
-    msg!("Owner: {}", &ctx.accounts.owner_authority.key());
-    msg!("Purchaser: {}", &ctx.accounts.buyer_authority.key());
-
-    // Transfer SOL from buyer to owner
+    msg!("Initiating transfer of {} lamports...", sale_lamports);
+    msg!("Purchaser (sending lamports): {}", &ctx.accounts.buyer_authority.key());
+    msg!("Seller (receiving lamports): {}", &ctx.accounts.owner_authority.key());
     system_program::transfer(
         CpiContext::new(
             ctx.accounts.system_program.to_account_info(),
@@ -31,14 +28,29 @@ pub fn sell(
         ),
         sale_lamports
     )?;
-    msg!(
-        "{} lamports transferred from {} to {} successfully.",
-        sale_lamports,
-        &ctx.accounts.buyer_authority.key(),
-        &ctx.accounts.owner_authority.key(),
-    );
+    
+    msg!("Lamports transferred successfully.");
 
-    // Transfer NFT from owner to buyer
+    msg!("Creating buyer token account...");
+    msg!("Buyer Token Address: {}", &ctx.accounts.buyer_token_account.key());    
+    associated_token::create(
+        CpiContext::new(
+            ctx.accounts.associated_token_program.to_account_info(),
+            associated_token::Create {
+                payer: ctx.accounts.buyer_authority.to_account_info(),
+                associated_token: ctx.accounts.buyer_token_account.to_account_info(),
+                authority: ctx.accounts.buyer_authority.to_account_info(),
+                mint: ctx.accounts.mint.to_account_info(),
+                system_program: ctx.accounts.system_program.to_account_info(),
+                token_program: ctx.accounts.token_program.to_account_info(),
+                rent: ctx.accounts.rent.to_account_info(),
+            },
+        ),
+    )?;
+
+    msg!("Transferring NFT...");
+    msg!("Owner Token Address: {}", &ctx.accounts.owner_token_account.key());    
+    msg!("Buyer Token Address: {}", &ctx.accounts.buyer_token_account.key());    
     token::transfer(
         CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
@@ -50,14 +62,9 @@ pub fn sell(
         ),
         1
     )?;
-    msg!(
-        "NFT {} transferred from {} to {} successfully.",
-        sale_lamports,
-        &ctx.accounts.owner_token_account.key(),
-        &ctx.accounts.buyer_token_account.key(),
-    );
+    msg!("NFT transferred successfully.");
     
-    msg!("Sale completed!");
+    msg!("Sale completed successfully!");
 
     Ok(())
 }
@@ -71,11 +78,13 @@ pub struct SellNft<'info> {
     pub owner_token_account: Account<'info, token::TokenAccount>,
     #[account(mut)]
     pub owner_authority: Signer<'info>,
+    /// CHECK: We're about to create this with Anchor
     #[account(mut)]
-    pub buyer_token_account: Account<'info, token::TokenAccount>,
+    pub buyer_token_account: UncheckedAccount<'info>,
     #[account(mut)]
     pub buyer_authority: Signer<'info>,
-    // pub rent: Sysvar<'info, Rent>,
+    pub rent: Sysvar<'info, Rent>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, token::Token>,
+    pub associated_token_program: Program<'info, associated_token::AssociatedToken>,
 }

@@ -22,7 +22,7 @@ pub fn mint(
     metadata_uri: String,
 ) -> Result<()> {
 
-    msg!("Creating mint...");
+    msg!("Creating mint account...");
     msg!("Mint: {}", &ctx.accounts.mint.key());
     system_program::create_account(
         CpiContext::new(
@@ -37,7 +37,7 @@ pub fn mint(
         &ctx.accounts.token_program.key(),
     )?;
 
-    msg!("Initializing mint...");
+    msg!("Initializing mint account...");
     msg!("Mint: {}", &ctx.accounts.mint.key());
     token::initialize_mint(
         CpiContext::new(
@@ -53,7 +53,7 @@ pub fn mint(
     )?;
 
     msg!("Creating token account...");
-    msg!("Address: {}", &ctx.accounts.token_account.key());    
+    msg!("Token Address: {}", &ctx.accounts.token_account.key());    
     associated_token::create(
         CpiContext::new(
             ctx.accounts.associated_token_program.to_account_info(),
@@ -69,8 +69,9 @@ pub fn mint(
         ),
     )?;
 
-    msg!("Minting token...");
-    msg!("Token: {}", &ctx.accounts.mint.to_account_info().key());    
+    msg!("Minting token to token account...");
+    msg!("Mint: {}", &ctx.accounts.mint.to_account_info().key());   
+    msg!("Token Address: {}", &ctx.accounts.token_account.key());     
     token::mint_to(
         CpiContext::new(
             ctx.accounts.token_program.to_account_info(),
@@ -83,8 +84,8 @@ pub fn mint(
         1,
     )?;
 
-    msg!("Creating metadata...");
-    msg!("Metadata address: {}", &ctx.accounts.metadata.to_account_info().key());
+    msg!("Creating metadata account...");
+    msg!("Metadata account address: {}", &ctx.accounts.metadata.to_account_info().key());
     invoke(
         &instruction::create_metadata_accounts_v2(
             TOKEN_METADATA_ID, 
@@ -112,8 +113,8 @@ pub fn mint(
         ],
     )?;
 
-    msg!("Creating master edition metadata...");
-    msg!("Master edition address: {}", &ctx.accounts.master_edition.to_account_info().key());
+    msg!("Creating master edition metadata account...");
+    msg!("Master edition metadata account address: {}", &ctx.accounts.master_edition.to_account_info().key());
     invoke(
         &instruction::create_master_edition_v3(
             TOKEN_METADATA_ID, 
@@ -135,7 +136,7 @@ pub fn mint(
         ],
     )?;
 
-    msg!("Token mint process completed.");
+    msg!("Token mint process completed successfully.");
 
     Ok(())
 }

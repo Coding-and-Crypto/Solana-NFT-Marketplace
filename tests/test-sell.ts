@@ -1,13 +1,5 @@
 import * as anchor from "@project-serum/anchor";
 // ** Comment this to use solpg imported IDL **
-import { 
-  TOKEN_PROGRAM_ID, 
-  createAssociatedTokenAccountInstruction, 
-  getAssociatedTokenAddress, 
-  createInitializeMintInstruction, 
-  MINT_SIZE, 
-  createAccount
-} from '@solana/spl-token';
 import {
   createKeypairFromFile,
 } from './util';
@@ -36,7 +28,7 @@ describe("nft-marketplace", async () => {
 
     const saleAmount = 1 * anchor.web3.LAMPORTS_PER_SOL;
     const mint: anchor.web3.PublicKey = new anchor.web3.PublicKey(
-      "AM4JiScMaBCj6Jc8rC4u9MY1SbU6ru4AikyxsbxWmEEj"
+      "ETJFCAfJdowSMavu3fAQMGwtrNbExwi5rEDXbdXxfdUY"
     );
     // const buyerPubkey: anchor.web3.PublicKey = new anchor.web3.PublicKey(
     //   "3ec3aeqsDN6yyNqgvi2HxJ8AhY3nwhQBB6L6LPsHAeqX"
@@ -44,6 +36,8 @@ describe("nft-marketplace", async () => {
     // const buyer: anchor.web3.Keypair = anchor.web3.Keypair.generate();
     const buyer: anchor.web3.Keypair = await createKeypairFromFile(__dirname + "/keypairs/buyer1.json");
     console.log(`Buyer public key: ${buyer.publicKey}`);
+
+    // Derive the associated token account address for owner & buyer
 
     const ownerTokenAddress = await anchor.utils.token.associatedAddress({
       mint: mint,
@@ -54,19 +48,10 @@ describe("nft-marketplace", async () => {
       owner: buyer.publicKey,
     });
     console.log(`Request to sell NFT: ${mint} for ${saleAmount} lamports.`);
+    console.log(`Owner's Token Address: ${ownerTokenAddress}`);
+    console.log(`Buyer's Token Address: ${buyerTokenAddress}`);
 
-    await program.provider.sendAndConfirm(
-      new anchor.web3.Transaction().add(
-        createAssociatedTokenAccountInstruction(
-          buyer.publicKey,
-          buyerTokenAddress,
-          buyer.publicKey,
-          mint
-        )
-      ),
-      [buyer]
-    );
-    console.log("Buyer token account created.");
+    // Transact with the "sell" function in our on-chain program
     
     await program.methods.sell(
       new anchor.BN(saleAmount)
@@ -80,6 +65,5 @@ describe("nft-marketplace", async () => {
     })
     .signers([buyer])
     .rpc();
-    console.log("Program transaction success.");
   });
 });
