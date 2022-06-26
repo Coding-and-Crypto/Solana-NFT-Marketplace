@@ -1,8 +1,8 @@
 import * as anchor from "@project-serum/anchor";
-// ** Comment this to use solpg imported IDL **
 import {
   createKeypairFromFile,
 } from './util';
+// ** Comment this to use solpg imported IDL **
 import { NftMarketplace } from "../target/types/nft_marketplace";
 
 
@@ -30,10 +30,6 @@ describe("nft-marketplace", async () => {
     const mint: anchor.web3.PublicKey = new anchor.web3.PublicKey(
       "HQjS4Yp1Ku7P1fy4YwwPACeaDLY9AC62b3omfBSQ5jyT"
     );
-    // const buyerPubkey: anchor.web3.PublicKey = new anchor.web3.PublicKey(
-    //   "3ec3aeqsDN6yyNqgvi2HxJ8AhY3nwhQBB6L6LPsHAeqX"
-    // );
-    // const buyer: anchor.web3.Keypair = anchor.web3.Keypair.generate();
     const buyer: anchor.web3.Keypair = await createKeypairFromFile(__dirname + "/keypairs/buyer1.json");
     console.log(`Buyer public key: ${buyer.publicKey}`);
 
